@@ -1,5 +1,13 @@
 import re
 
-phone_num_regex = re.compile(r'(\d\d\d)?-\d\d\d-\d\d\d\d')
+phone_num_regex = re.compile(r'(\d\d\d-)?\d\d\d-\d\d\d\d') # ? - zero or one time
 
-print(phone_num_regex.findall('Reguasd fsdim 345-1243 fdg  34345 234-234-2234 23424324342342334'))
+print(phone_num_regex.search('My number is  fsdim 234-345-1243 f4'))
+
+bat_regex = re.compile(r'Bat(wo)*man') # * - zero or more
+
+print(bat_regex.search('Batman')) 
+
+bat2_regex = re.compile(r'Bat(wo)+man') # + - one or more
+
+print(bat2_regex.search('Batman')) 
