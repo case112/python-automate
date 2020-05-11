@@ -11,3 +11,7 @@ print(bat_regex.search('Batman'))
 bat2_regex = re.compile(r'Bat(wo)+man') # + - one or more
 
 print(bat2_regex.search('Batman')) 
+
+ha_regex = re.compile(r'(Ha){3}') # something {x} times
+
+print(ha_regex.search('HaHaHa')) 
