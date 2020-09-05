@@ -5,7 +5,7 @@ import shutil
 import sys
 
 #print('Album first image link here:')
-url = 'http://fotoalbum.ee/photos/Meriliiin/101783435'
+url = 'http://fotoalbum.ee/photos/Meriliiin/99677478'
 token = True
 img_no = 0
 
@@ -18,12 +18,19 @@ except requests.exceptions.HTTPError as err:
 
 soup = bs4.BeautifulSoup(res.text, 'html.parser')
 album_name_soup = soup.select('.breadcrumbs > a:nth-child(2)')
+images_to_download_soup = soup.find(class_='breadcrumbs').find_all(text=True, recursive=False)
 
 if album_name_soup == []:
     sys.exit("This is not a valid URL. Try again.")
 
-album_name = album_name_soup[0].text.strip().lower().replace(".", "").replace(",", "").replace(" ", "") 
-print('Downloading from album: ' + album_name)
+album_name = album_name_soup[0].text.strip().lower().replace(".", "").replace(",", "").replace(" ", "")
+images_to_download = str(images_to_download_soup)
+images_to_download = images_to_download[images_to_download.find("(")+1:images_to_download.find(")")].split('/')
+current_image = int(images_to_download[0])
+total_images = int(images_to_download[1])
+images_to_download = total_images - current_image + 1 
+print('You are about to download ' + str(images_to_download) + ' images from album: ' + album_name)
+input('Continue? (y/n)')
 
 if not os.path.exists(os.getcwd() + album_name):
     os.makedirs(album_name, exist_ok=True)
@@ -47,7 +54,7 @@ while token == True:
         img_no += 1
         img_no = str(img_no)
 
-        img_path = os.getcwd() + os.path.sep + album_name + os.path.sep + album_name + '_img_' + img_no + '.jpg'
+        img_path = os.getcwd() + os.path.sep + album_name + os.path.sep + 'img_' + img_no + '_' + album_name + '.jpg'
         image_name = album_name + '_img_' + img_no + '.jpg'
         print("Get - " + image_name)
 
