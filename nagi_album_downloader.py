@@ -55,7 +55,7 @@ while token == True:
         img_no = str(img_no)
 
         img_path = os.getcwd() + os.path.sep + album_name + os.path.sep + 'img_' + img_no + '_' + album_name + '.jpg'
-        image_name = album_name + '_img_' + img_no + '.jpg'
+        image_name = 'img_' + img_no + '_' + album_name + '.jpg'
         print("Get - " + image_name)
 
         with open(img_path, 'wb') as f:
@@ -65,7 +65,7 @@ while token == True:
 
     next_element = soup.select('.next')
     if next_element == []:
-        print('Reached to the end of the album, downloaded ' + img_no + 'images.')
+        print('Reached to the end of the album, downloaded ' + img_no + ' images.')
         token = False
     else:
         for link in next_element:
