@@ -1,11 +1,13 @@
+#!/usr/bin/env python3.7
+
 import bs4
 import requests
 import os
 import shutil
 import sys
 
-#print('Album first image link here:')
-url = 'http://fotoalbum.ee/photos/Meriliiin/99677478'
+
+url = input('Album first image link here:') 
 token = True
 img_no = 0
 
@@ -21,7 +23,8 @@ album_name_soup = soup.select('.breadcrumbs > a:nth-child(2)')
 images_to_download_soup = soup.find(class_='breadcrumbs').find_all(text=True, recursive=False)
 
 if album_name_soup == []:
-    sys.exit("This is not a valid URL. Try again.")
+    input('This is not a valid URL. Press any key to exit the program')
+    sys.exit("Bye")
 
 album_name = album_name_soup[0].text.strip().lower().replace(".", "").replace(",", "").replace(" ", "")
 images_to_download = str(images_to_download_soup)
@@ -30,7 +33,11 @@ current_image = int(images_to_download[0])
 total_images = int(images_to_download[1])
 images_to_download = total_images - current_image + 1 
 print('You are about to download ' + str(images_to_download) + ' images from album: ' + album_name)
-input('Continue? (y/n)')
+answer = input('Continue? (yes/no):')
+
+if answer.lower() != 'yes':
+    input('Press any key to exit the program')
+    sys.exit("Bye")
 
 if not os.path.exists(os.getcwd() + album_name):
     os.makedirs(album_name, exist_ok=True)
@@ -73,4 +80,6 @@ while token == True:
             next_url = 'http://fotoalbum.ee' + next_url
             #print(next_url)
             url = next_url
+
+input('Press any key to exit the program')
 
