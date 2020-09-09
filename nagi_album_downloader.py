@@ -7,7 +7,7 @@ import shutil
 import sys
 
 
-url = input('Album first image link here:') 
+url = input('Album first image link here: ') 
 token = True
 img_no = 0
 
@@ -33,14 +33,14 @@ current_image = int(images_to_download[0])
 total_images = int(images_to_download[1])
 images_to_download = total_images - current_image + 1 
 print('You are about to download ' + str(images_to_download) + ' images from album: ' + album_name)
-answer = input('Continue? (yes/no):')
+answer = input('Continue? (yes/no): ')
 
 if answer.lower() != 'yes':
     input('Press any key to exit the program')
     sys.exit("Bye")
 
-if not os.path.exists(os.getcwd() + album_name):
-    os.makedirs(album_name, exist_ok=True)
+if not os.path.exists(os.path.expanduser("~/Desktop") + os.path.sep + album_name):
+    os.makedirs(os.path.expanduser("~/Desktop") + os.path.sep + album_name, exist_ok=True)
 
 while token == True:
     res = requests.get(url)
@@ -61,7 +61,9 @@ while token == True:
         img_no += 1
         img_no = str(img_no)
 
-        img_path = os.getcwd() + os.path.sep + album_name + os.path.sep + 'img_' + img_no + '_' + album_name + '.jpg'
+        #img_path = os.getcwd() + os.path.sep + album_name + os.path.sep + 'img_' + img_no + '_' + album_name + '.jpg'
+        img_path = os.path.expanduser("~/Desktop") + os.path.sep + album_name + os.path.sep + 'img_' + img_no + '_' + album_name + '.jpg'
+    
         image_name = 'img_' + img_no + '_' + album_name + '.jpg'
         print("Get - " + image_name)
 
@@ -81,5 +83,7 @@ while token == True:
             #print(next_url)
             url = next_url
 
-input('Press any key to exit the program')
+input('Press enter to exit the program')
+
+
 
