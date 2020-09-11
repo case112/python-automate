@@ -61,7 +61,6 @@ while token == True:
         img_no += 1
         img_no = str(img_no)
 
-        #img_path = os.getcwd() + os.path.sep + album_name + os.path.sep + 'img_' + img_no + '_' + album_name + '.jpg'
         img_path = os.path.expanduser("~/Desktop") + os.path.sep + album_name + os.path.sep + 'img_' + img_no + '_' + album_name + '.jpg'
     
         image_name = 'img_' + img_no + '_' + album_name + '.jpg'
