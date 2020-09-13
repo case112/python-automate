@@ -6,6 +6,7 @@ import os
 import shutil
 import sys
 import random
+import re
 
 print('')
 print('####################################################')
@@ -54,7 +55,8 @@ if album_name_soup == []:
     sys.exit("")
 
 album_name_long = album_name_soup[0].text.strip()
-album_name = album_name_soup[0].text.strip().lower().replace(".", "").replace(",", "").replace(" ", "")
+album_name = album_name_soup[0].text.strip().lower()
+album_name = re.sub('[\W_]+', '', album_name)
 images_to_download = str(images_to_download_soup)
 images_to_download = images_to_download[images_to_download.find("(")+1:images_to_download.find(")")].split('/')
 current_image = int(images_to_download[0])
