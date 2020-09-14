@@ -39,6 +39,15 @@ except requests.exceptions.MissingSchema:
     print('')
     input('Vigane URL, proovi uuesti, vajuta enter klahvile et programm sulgeda ')
     sys.exit("")
+except requests.exceptions.ConnectionError:
+    print('')
+    input('Interneti ühendus puudub, proovi uuesti  ')
+    sys.exit("")
+except requests.exceptions.InvalidURL:
+    print('')
+    input('Vigane URL, proovi uuesti, vajuta enter klahvile et programm sulgeda ')
+    sys.exit("")
+
 
 soup = bs4.BeautifulSoup(res.text, 'html.parser')
 album_name_soup = soup.select('.breadcrumbs > a:nth-child(2)')
