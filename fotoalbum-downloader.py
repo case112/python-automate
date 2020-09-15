@@ -67,8 +67,15 @@ album_name_long = album_name_soup[0].text.strip()
 album_name = album_name_soup[0].text.strip().lower()
 album_name = re.sub('[\W_]+', '', album_name)
 images_to_download = str(images_to_download_soup)
-images_to_download = images_to_download[images_to_download.find("(")+1:images_to_download.find(")")].split('/')
-current_image = int(images_to_download[0])
+images_to_download = images_to_download[images_to_download.rfind("(")+1:images_to_download.rfind(")")].split('/')
+
+try:
+    current_image = int(images_to_download[0])
+except ValueError:
+    print('')
+    input('Vigane URL, proovi uuesti, vajuta enter klahvile et programm sulgeda ')
+    sys.exit("")
+
 total_images = int(images_to_download[1])
 images_to_download = total_images - current_image + 1 
 print('Leidsin ' + str(images_to_download) + ' pilti albumist - ' + str(album_name_long))
@@ -96,8 +103,13 @@ while token == True:
         image_url = 'http://' + image_url
         #print(image_url)
 
+    try:
+        img_request = requests.get(image_url, stream=True)
+    except requests.exceptions.ConnectionError:
+        print('')
+        input('Ühenduse viga, proovi uuesti, vajuta enter klahvile et programm sulgeda ')
+        sys.exit("")
 
-    img_request = requests.get(image_url, stream=True)
     if img_request.status_code == 200:
         img_no = int(img_no)
         img_no += 1
