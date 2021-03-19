@@ -1,6 +1,10 @@
 from selenium import webdriver
 
-browser = webdriver.Firefox()
+firefox_profile = webdriver.FirefoxProfile()
+firefox_profile.set_preference("browser.privatebrowsing.autostart", True)
+
+browser = webdriver.Firefox(firefox_profile=firefox_profile, executable_path = '/usr/local/bin/geckodriver')
+
 
 browser.get('https://www.okidoki.ee/')
 
