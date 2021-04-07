@@ -6,8 +6,9 @@ import sys
 import re
 
 
-base_url = 'base_url'
-initial_url = 'initial_url'
+base_url = 'https://testkeskkond/'
+initial_url = 'sth'
+post_url = 'sth'
 token = True
 
 print('')
@@ -17,7 +18,7 @@ print('')
 #start session
 try:
     with requests.Session() as session:
-        cookie = {'PHPSESSID': 'beb954415ec509d84ff70ad3e2ded9de'}
+        cookie = {'PHPSESSID': '08d8fa2439fe24c51e6c2f5ae6b5583'}
         response = session.post(initial_url, cookies=cookie)
         #print(response)
         #print(session)
@@ -86,15 +87,28 @@ payload = {
     
     }
 
+# get list of form options
+form_options =  soup.find_all("option", {"selected":"selected"})
+
 payload['title'] =  soup.find("input", {"name":"title"})['value']
-payload['county'] =  soup.find("option", {"selected":"selected"})['label']
-#payload['parish'] =  soup.find_all("option", {"selected":"selected"})['label']
+payload['county'] =  form_options[0]['value']
+payload['parish'] =  form_options[1]['value']
 payload['address'] =  soup.find("input", {"name":"address"})['value']
+payload['type'] =  form_options[2]['value']
+payload['cm_type'] =  form_options[3]['value']
+payload['author'] =  soup.find("input", {"name":"author"})['value']
+payload['archivalreference'] =  soup.find("input", {"name":"archivalreference"})['value']
+payload['countyfolder'] =  soup.find("input", {"name":"countyfolder"})['value']
+payload['links[0]'] =  soup.find("input", {"name":"links[]"})['value']
+payload['linknames[0]'] =  soup.find("input", {"name":"linknames[]"})['value']
+payload['links[1]'] =  soup.find("input", {"name":"links[]"})['value']
+payload['linknames[1]'] =  soup.find("input", {"name":"linknames[]"})['value']
 
 
 # tuleks seda proovida, kas siis teeb p'riselt posti
 # kui ja ssiis kui teeb tuleb saata need uued valued kaasa parameetritena
-#response2 = session.post(form_action, cookies=cookie)
+#response2 = session.post(post_url, data=payload, cookies=cookie)
+#print(response2)
 
 
 print(payload)
